@@ -2,7 +2,7 @@
 
 namespace Domain.Interfaces.Repositories
 {
-    interface IContaRepository
+    public interface IContaRepository
     {
         AdicionarContaResponse AdicionarConta(AdicionarContaRequest conta);
     }
