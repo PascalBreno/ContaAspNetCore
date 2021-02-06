@@ -3,7 +3,7 @@ using System;
 
 namespace Domain.Entities
 {
-    public class ContaEntity
+    public class Conta
 
     {
         public Guid ContaId { get; set; }
