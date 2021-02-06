@@ -1,9 +1,11 @@
 ﻿using Domain.Arguments.Conta;
+using Domain.Entities;
+using System;
 
 namespace Domain.Interfaces.Repositories
 {
     public interface IContaRepository
     {
-        AdicionarContaResponse AdicionarConta(AdicionarContaRequest conta);
+        Guid AdicionarConta(ContaEntity conta);
     }
 }
