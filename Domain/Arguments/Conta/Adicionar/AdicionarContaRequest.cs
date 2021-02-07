@@ -1,9 +1,8 @@
-﻿using Domain.Interfaces.Arguments;
-using System;
+﻿using System;
 
 namespace Domain.Arguments.Conta
 {
-    public class AdicionarContaRequest : IRequest
+    public class AdicionarContaRequest 
     {
         public string Nome { get; set; }
         public long Valor { get; set; }
