@@ -1,4 +1,6 @@
-﻿using Domain.Arguments.Conta;
+﻿using System;
+using Domain.Arguments.Conta;
+using Domain.Entities;
 using Domain.Interfaces.Repositories;
 using Domain.Interfaces.Services;
 
@@ -14,9 +16,10 @@ namespace Domain.Service
             _contaRepository = contaRepository;
         }
 
-        public AdicionarContaResponse AdicionarConta(AdicionarContaRequest conta)
+        public Guid AdicionarConta(AdicionarContaRequest conta)
         {
-            return _contaRepository.AdicionarConta(conta);
+            var teste = new Conta();
+            return _contaRepository.AdicionarConta(teste);
         }
     }
 }

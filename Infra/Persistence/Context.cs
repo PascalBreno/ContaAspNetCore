@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Infra.Persistence.Configure;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infra.Persistence
@@ -7,7 +8,7 @@ namespace Infra.Persistence
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Test")
+            optionsBuilder.UseSqlServer(@"Server=localhost\MSSQLSERVER01;Database=Test; Integrated Security=True")
                 .EnableDetailedErrors();
         }
         
@@ -16,9 +17,8 @@ namespace Infra.Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("ContasBD");
-            
-            modelBuilder.Entity<Conta>()
-                .HasKey(x => x.ContaId);
+
+            modelBuilder.ApplyConfiguration(new  ContaConfigure());
         }
     }
     
