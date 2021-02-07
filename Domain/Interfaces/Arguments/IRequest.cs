@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Domain.Interfaces.Arguments
 {
-    interface IRequest
+    public interface IRequest
     {
     }
 }

@@ -9,12 +9,13 @@ namespace Infra.Persistence.Configure
         public void Configure(EntityTypeBuilder<Conta> builder)
         {
             builder.ToTable("Conta");
-            builder.HasKey(x => x.ContaId);
+            builder.HasKey(x => x.Id);
             builder.Property(x => x.status);
             builder.Property(x => x.Nome).IsRequired();
             builder.Property(x => x.DataVencimento).IsRequired();
             builder.Property(x => x.ValorOriginal).IsRequired();
-            
+            builder.Property(x => x.IsDeleted).HasDefaultValue(false);
+
         }
     }
 }

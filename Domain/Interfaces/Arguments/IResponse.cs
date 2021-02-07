@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Domain.Interfaces.Arguments
 {
-    interface IResponse
+    public interface IResponse
     {
     }
 }

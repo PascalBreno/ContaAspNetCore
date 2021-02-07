@@ -2,27 +2,30 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using Domain.Entities;
 using Domain.Interfaces.Repositories.Base;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
+using Domain.Interfaces.Services.Base;
+using FluentValidation;
 
-namespace Infra.Persistence.Repository.Base
+namespace Domain.Service.Base
 {
-    public class Repository<T> : IRepository<T>
-    where T : class 
+    public class Service<T> : IService<T>
+    where T : EntityBase
     {
+        
+        protected readonly IValidator<T> _validator;
+        protected readonly IRepository<T> _repository;
 
-        private readonly Context db;
-
-        public Repository(IDbContextFactory<Context> contextFactory)
+        public Service(IValidator<T> validator, IRepository<T> repository)
         {
-            db = contextFactory.CreateDbContext();    
+            _validator = validator;
+            _repository = repository;
         }
+
         public T Add(T obj)
         {
-            var entry = db.Entry(obj);
-            entry.State = EntityState.Added;
-            return entry.Entity;
+            _validator.ValidateAndThrow(obj);
+            return _repository.Add(obj);
         }
 
         public long GenerateId()

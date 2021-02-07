@@ -2,24 +2,23 @@
 using Domain.Arguments.Conta;
 using Domain.Entities;
 using Domain.Interfaces.Repositories;
+using Domain.Interfaces.Repositories.Base;
 using Domain.Interfaces.Services;
+using Domain.Service.Base;
+using FluentValidation;
 
 namespace Domain.Service
 {
-    public class ContaService : IContaService
+    public class ContaService : Service<Conta>, IContaService
     {
 
-        private readonly IContaRepository _contaRepository;
-
-        public ContaService(IContaRepository contaRepository)
+        public ContaService(IValidator<Conta> validator, IRepository<Conta> repository) : base(validator, repository)
         {
-            _contaRepository = contaRepository;
         }
 
         public Guid AdicionarConta(AdicionarContaRequest conta)
         {
-            var teste = new Conta();
-            return _contaRepository.AdicionarConta(teste);
+            throw new NotImplementedException();
         }
     }
 }

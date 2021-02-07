@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace Domain.Interfaces.Repositories.Base
 {
-    public interface IBaseRepository<T> 
+    public interface IRepository<T> 
     where T : class
     {
         T Add(T obj);
