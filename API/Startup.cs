@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Http;
 using Domain.Interfaces.Repositories;
 using Domain.Interfaces.Repositories.Base;
 using Domain.Interfaces.Services;
@@ -39,13 +40,15 @@ namespace API
             {
                 app.UseDeveloperExceptionPage();
             }
-            
             app.UseRouting();
-
+            app.UseHttpsRedirection();
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapGet("/", async context => { await context.Response.WriteAsync("Hello World!"); });
+                
             });
+            
         }
     }
 }
