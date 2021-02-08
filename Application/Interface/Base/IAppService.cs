@@ -7,14 +7,8 @@ namespace Application.Interface.Base
     {
         Task<T> Add(T viewModel);
 
-        long GenerateId();
-
-        T GetById(string id);
 
         IEnumerable<T> GetAll();
-
-        T Update(T viewModel);
-        void Remove(T viewModel);
 
     }
 }

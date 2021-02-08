@@ -1,5 +1,7 @@
-﻿using Application.Arguments.Conta.Adicionar;
+﻿using System;
+using Application.Arguments.Conta.Adicionar;
 using AutoMapper;
+using CrossCrutting.Enum;
 using Domain.Entities;
 
 namespace Imea.Application.Mapper
@@ -8,9 +10,8 @@ namespace Imea.Application.Mapper
     {
         public ViewModelToDomainMappingProfile()
         {
-            CreateMap<AdicionarContaResponse, Conta>().ForMember(x=>x.ValorOriginal, y=>y.MapFrom(z=>z.Valor));
-            CreateMap<AdicionarContaRequest, Conta>().ForMember(x=>x.ValorOriginal, y=>y.MapFrom(z=>z.Valor));
-  
+            CreateMap<AdicionarContaRequest, Conta>().ForMember(x=>x.ValorOriginal, y=>y.MapFrom(z=>z.Valor))
+                .ForMember(x=>x.status,y=> y.MapFrom(z=>Enum.GetName(typeof(StatusEnum), z.status)));
         }
     }
 }

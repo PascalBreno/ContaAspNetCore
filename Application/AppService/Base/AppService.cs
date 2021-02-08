@@ -35,11 +35,6 @@ namespace Application.AppService.Base
             return result != null ? AutoMapper.Mapper.Map<TViewModel>(result) : null;
         }
 
-        public long GenerateId()
-        {
-            return Service.GenerateId();
-        }
-
         public TViewModel GetById(string id)
         {
             var result = Service.GetById(id);
@@ -49,38 +44,9 @@ namespace Application.AppService.Base
         public IEnumerable<TViewModel> GetAll()
         {
             var result = Service.Get();
-            return (IEnumerable<TViewModel>) (result != default(TEntity) ? AutoMapper.Mapper.Map<IEnumerable<TViewModel>>(result) : null);
+            return  (result != default(TEntity) ? AutoMapper.Mapper.Map<IEnumerable<TViewModel>>(result) : null);
         }
 
-        public TViewModel Update(TViewModel obj)
-        {
-            var entity = AutoMapper.Mapper.Map<TEntity>(obj);
-            BeginTransaction();
-            var result = Service.Update(entity);
-            Commit();
-            if (result != default(TEntity))
-                return AutoMapper.Mapper.Map<TViewModel>(result);
-            return null;
-        }
-
-        public void Remove(TViewModel obj)
-        {
-            var entity = AutoMapper.Mapper.Map<TEntity>(obj);
-            try
-            {
-                BeginTransaction();
-                Service.Remove(entity);
-                Commit();
-            }
-            catch (Exception e)
-            {
-                if (e is DbUpdateException)
-                {
-                    throw new ValidationException( new List<ValidationFailure>(){new ValidationFailure("Remover", "O item possui dependências e não pode ser excluído")});
-                }
-                throw;
-            }
-
-        }
+        
     }
 }

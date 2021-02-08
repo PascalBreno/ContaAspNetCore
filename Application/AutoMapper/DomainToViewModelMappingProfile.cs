@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Application.Arguments.Conta.Adicionar;
 using AutoMapper;
- using Domain.Entities;
+using CrossCrutting.Enum;
+using Domain.Entities;
 
 namespace Imea.Application.Mapper
 {
@@ -10,10 +12,10 @@ namespace Imea.Application.Mapper
     {
         public DomainToViewModelMappingProfile()
         {
-            CreateMap<Conta, AdicionarContaRequest>().ForMember(x=>x.Valor, y=>y.MapFrom(z=>z.ValorOriginal));
-            CreateMap<IEnumerable<Conta>, IEnumerable<AdicionarContaResponse>>();
-            
-          
+            CreateMap<Conta, AdicionarContaRequest>().ForMember(x => x.Valor, y => y.MapFrom(z => z.ValorOriginal));
+            //.ForMember(x=>x.status,y=> y.MapFrom(z=>Enum.GetName(typeof(StatusEnum), z.status)));
+
+
         }
     }
 }

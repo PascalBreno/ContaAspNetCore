@@ -2,8 +2,7 @@
 {
     public enum StatusEnum
     {
-        EmAndamento = 0,
-        Pago = 1,
+        PagoSemAtraso = 1,
         EmAtraso = 2
     }
 }
