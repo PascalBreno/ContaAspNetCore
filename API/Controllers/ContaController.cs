@@ -1,11 +1,11 @@
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
-using System.Web.Http;
 using Domain.Entities;
 using Domain.Interfaces.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using FluentValidation;
+
 namespace API.Controllers
 {
     [ApiController]
@@ -23,30 +23,34 @@ namespace API.Controllers
             _contaService = contaService;
         }
 
-        [Microsoft.AspNetCore.Mvc.HttpPost]
-        public async Task<IActionResult > Post([Microsoft.AspNetCore.Mvc.FromBody] Conta conta)
+        [HttpPost]
+        public async Task<IActionResult > Post([FromBody] Conta conta)
         {
             try
             {
-
                 var result = await _contaService.Add(conta);
                 return Ok(result);
             }
-            catch (ValidationException ex)
+            catch (FluentValidation.ValidationException ex)
             {
                 return BadRequest(ex.Message);
             }
 
             return null;
         }
-        [Microsoft.AspNetCore.Mvc.HttpGet("Conta")]
-        public async Task<HttpResponse> Get()
+        [HttpGet("Conta")]
+        public IActionResult  Get()
         {
-            var teste = "123";
-            var conta = new Conta();
-            var result = await _contaService.Add(conta);
-
-            return null;
+            try
+            {
+                var result = _contaService.Get();
+                return Ok(result);
+            }
+            catch (FluentValidation.ValidationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
         }
     }
 }

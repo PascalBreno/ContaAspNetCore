@@ -1,5 +1,5 @@
-﻿using Domain.Enum;
-using System;
+﻿using System;
+using CrossCrutting.Enum;
 
 namespace Domain.Entities
 {

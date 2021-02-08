@@ -1,7 +1,7 @@
-﻿using Domain.Enum;
-using System;
+﻿using System;
+using CrossCrutting.Enum;
 
-namespace Domain.Arguments.Conta
+namespace Application.Arguments.Conta.Adicionar
 {
     public class AdicionarContaResponse 
     {

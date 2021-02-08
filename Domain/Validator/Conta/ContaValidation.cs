@@ -1,8 +1,5 @@
-﻿using Domain.Arguments.Conta;
-using FluentValidation;
+﻿using FluentValidation;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Domain.Validator.Conta
 {
@@ -11,6 +8,16 @@ namespace Domain.Validator.Conta
        public ContaValidation()
         {
             RuleFor(x => x.Nome).NotNull().NotEmpty().WithMessage("O nome é obrigatório!");
+            RuleFor(x => x.ValorOriginal).NotNull().WithMessage("O Valor original deve ser preenchido");
+            RuleFor(x => x.DataVencimento).NotNull().WithMessage("A data de vencimento não deve ficar vazia");
+            RuleFor(x => x.DataVencimento).Must(DataMaior).NotNull().WithMessage("A data de vencimento não pode ser menor ou igual a data de hoje.");
+            
         }
+
+       private static bool DataMaior(DateTime DataVencimento)
+       {
+           var dataAtual = DateTime.UtcNow;
+           return dataAtual < DataVencimento;
+       }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Domain.Arguments.Conta
+namespace Application.Arguments.Conta.Adicionar
 {
     public class AdicionarContaRequest 
     {

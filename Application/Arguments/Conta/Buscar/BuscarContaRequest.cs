@@ -1,6 +1,6 @@
 ﻿
 
-namespace Domain.Arguments.Conta.Buscar
+namespace Application.Arguments.Conta.Buscar
 {
     public class BuscarContaRequest 
     {

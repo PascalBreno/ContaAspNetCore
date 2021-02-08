@@ -1,7 +1,7 @@
-﻿using Domain.Enum;
-using System;
+﻿using System;
+using CrossCrutting.Enum;
 
-namespace Domain.Arguments.Conta.Buscar
+namespace Application.Arguments.Conta.Buscar
 {
     public class BuscarContaResponse 
     {
