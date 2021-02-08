@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Domain.Validator.Conta
 {
-    public class ContaValidation : AbstractValidator<AdicionarContaRequest>
+    public class ContaValidation : AbstractValidator<Entities.Conta>
     {
        public ContaValidation()
         {

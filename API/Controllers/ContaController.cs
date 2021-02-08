@@ -1,18 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 using System.Web.Http;
 using Domain.Entities;
 using Domain.Interfaces.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-
 namespace API.Controllers
 {
-   
     [ApiController]
-    [Microsoft.AspNetCore.Mvc.Route("[controller]")]
-    public class ContaController  : ApiController
+    
+    [Microsoft.AspNetCore.Mvc.Route("Conta")]
+    public class ContaController  : ControllerBase
     {
         private readonly IContaService _contaService;
 
@@ -25,9 +24,29 @@ namespace API.Controllers
         }
 
         [Microsoft.AspNetCore.Mvc.HttpPost]
-        public IHttpActionResult Post(Conta conta)
+        public async Task<IActionResult > Post([Microsoft.AspNetCore.Mvc.FromBody] Conta conta)
         {
-            return Ok(_contaService.Add(conta));
+            try
+            {
+
+                var result = await _contaService.Add(conta);
+                return Ok(result);
+            }
+            catch (ValidationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            return null;
+        }
+        [Microsoft.AspNetCore.Mvc.HttpGet("Conta")]
+        public async Task<HttpResponse> Get()
+        {
+            var teste = "123";
+            var conta = new Conta();
+            var result = await _contaService.Add(conta);
+
+            return null;
         }
     }
 }

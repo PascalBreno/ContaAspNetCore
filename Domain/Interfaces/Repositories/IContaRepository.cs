@@ -8,8 +8,7 @@ using Domain.Interfaces.Repositories.Base;
 
 namespace Domain.Interfaces.Repositories
 {
-    public interface IContaRepository
+    public interface IContaRepository: IRepository<Conta>
     {
-        Guid AdicionarConta(Conta conta);
     }
 }

@@ -10,13 +10,8 @@ namespace Infra.Persistence.Repository
 {
     public class ContaRepository : Repository<Conta>, IContaRepository
     {
-        public ContaRepository(IDbContextFactory<Context> contextFactory) : base(contextFactory)
+        public ContaRepository(Context context) : base(context)
         {
-        }
-
-        public Guid AdicionarConta(Conta conta)
-        {
-            throw new NotImplementedException();
         }
     }
 }

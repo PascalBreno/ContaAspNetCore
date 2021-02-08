@@ -22,7 +22,7 @@ namespace Infra.Migrations
 
             modelBuilder.Entity("Domain.Entities.Conta", b =>
                 {
-                    b.Property<Guid>("ContaId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -31,6 +31,11 @@ namespace Infra.Migrations
 
                     b.Property<DateTime>("DataVencimento")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -45,7 +50,7 @@ namespace Infra.Migrations
                     b.Property<int>("status")
                         .HasColumnType("int");
 
-                    b.HasKey("ContaId");
+                    b.HasKey("Id");
 
                     b.ToTable("Conta");
                 });

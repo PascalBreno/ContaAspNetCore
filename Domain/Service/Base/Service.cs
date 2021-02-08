@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Domain.Entities;
 using Domain.Interfaces.Repositories.Base;
 using Domain.Interfaces.Services.Base;
@@ -13,8 +14,8 @@ namespace Domain.Service.Base
     where T : EntityBase
     {
         
-        protected readonly IValidator<T> _validator;
-        protected readonly IRepository<T> _repository;
+        private readonly IValidator<T> _validator;
+        private readonly IRepository<T> _repository;
 
         public Service(IValidator<T> validator, IRepository<T> repository)
         {
@@ -22,10 +23,10 @@ namespace Domain.Service.Base
             _repository = repository;
         }
 
-        public T Add(T obj)
+        public async Task<T> Add(T obj)
         {
-            _validator.ValidateAndThrow(obj);
-            return _repository.Add(obj);
+            await _validator.ValidateAndThrowAsync(obj);
+            return await _repository.Add(obj);
         }
 
         public long GenerateId()

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Domain.Entities;
 
 namespace Domain.Interfaces.Services.Base
@@ -9,7 +10,7 @@ namespace Domain.Interfaces.Services.Base
     public interface IService<T>
     where T : EntityBase
     {
-        T Add(T obj);
+        Task<T> Add(T obj);
 
         long GenerateId();
 

@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
+using Domain.Entities;
 using Domain.Interfaces.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
@@ -9,20 +11,21 @@ using Microsoft.EntityFrameworkCore.Internal;
 namespace Infra.Persistence.Repository.Base
 {
     public class Repository<T> : IRepository<T>
-    where T : class 
+    where T : EntityBase 
     {
 
-        private readonly Context db;
+        private readonly Context _context;
 
-        public Repository(IDbContextFactory<Context> contextFactory)
+        public Repository(Context context)
         {
-            db = contextFactory.CreateDbContext();    
+            _context = context;
         }
-        public T Add(T obj)
+        public async Task<T> Add(T obj)
         {
-            var entry = db.Entry(obj);
+            var entry = _context.Entry(obj);
             entry.State = EntityState.Added;
-            return entry.Entity;
+            await _context.SaveChangesAsync();   
+            return  entry.Entity;
         }
 
         public long GenerateId()
