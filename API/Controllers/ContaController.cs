@@ -14,7 +14,7 @@ namespace API.Controllers
 {
     [ApiController]
     
-    [Microsoft.AspNetCore.Mvc.Route("Conta")]
+    [Route("Conta")]
     public class ContaController  : ControllerBase
     {
         private readonly IContaAppService _contaAppService;
@@ -39,7 +39,7 @@ namespace API.Controllers
                 return BadRequest(ex.Errors.FirstOrDefault().ErrorMessage);
             }
         }
-        [HttpGet("Conta")]
+        [HttpGet]
         public IActionResult  Get()
         {
             try
@@ -49,7 +49,7 @@ namespace API.Controllers
             }
             catch (FluentValidation.ValidationException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.Errors.FirstOrDefault().ErrorMessage);
             }
             
         }

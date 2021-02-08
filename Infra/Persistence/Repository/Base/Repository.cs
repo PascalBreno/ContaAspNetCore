@@ -50,7 +50,23 @@ namespace Infra.Persistence.Repository.Base
 
         public IEnumerable<T> Get(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = "")
         {
-            throw new NotImplementedException();
+            var dbSet = _context.Set<T>();
+            IQueryable<T> query = dbSet;
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            foreach (var includeProperty in includeProperties.Split
+                (new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+
+            if (orderBy != null)
+                return orderBy(query).AsNoTracking();
+            return query.AsNoTracking();
         }
 
         public bool Any(Expression<Func<T, bool>> filter = null)

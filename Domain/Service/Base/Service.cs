@@ -56,7 +56,7 @@ namespace Domain.Service.Base
 
         public IEnumerable<T> Get(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = "")
         {
-            throw new NotImplementedException();
+            return _repository.Get(filter, orderBy, includeProperties);
         }
 
         public bool Any(Expression<Func<T, bool>> filter = null)

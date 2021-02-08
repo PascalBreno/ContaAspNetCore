@@ -8,8 +8,8 @@ namespace Imea.Application.Mapper
     {
         public ViewModelToDomainMappingProfile()
         {
-            CreateMap<AdicionarContaResponse, Conta>();
-            CreateMap<AdicionarContaRequest, Conta>();
+            CreateMap<AdicionarContaResponse, Conta>().ForMember(x=>x.ValorOriginal, y=>y.MapFrom(z=>z.Valor));
+            CreateMap<AdicionarContaRequest, Conta>().ForMember(x=>x.ValorOriginal, y=>y.MapFrom(z=>z.Valor));
   
         }
     }

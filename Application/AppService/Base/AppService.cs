@@ -45,10 +45,11 @@ namespace Application.AppService.Base
             var result = Service.GetById(id);
             return result != default(TEntity) ? AutoMapper.Mapper.Map<TViewModel>(result) : null;
         }
-
+        
         public IEnumerable<TViewModel> GetAll()
         {
-            throw new NotImplementedException();
+            var result = Service.Get();
+            return (IEnumerable<TViewModel>) (result != default(TEntity) ? AutoMapper.Mapper.Map<IEnumerable<TViewModel>>(result) : null);
         }
 
         public TViewModel Update(TViewModel obj)
