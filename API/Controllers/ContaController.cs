@@ -1,10 +1,14 @@
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Threading.Tasks;
+using Application.Arguments.Conta.Adicionar;
+using Application.Interface.Conta;
 using Domain.Entities;
 using Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using FluentValidation;
+using FluentValidation.TestHelper;
 
 namespace API.Controllers
 {
@@ -13,37 +17,34 @@ namespace API.Controllers
     [Microsoft.AspNetCore.Mvc.Route("Conta")]
     public class ContaController  : ControllerBase
     {
-        private readonly IContaService _contaService;
-
+        private readonly IContaAppService _contaAppService;
         private readonly ILogger<ContaController> _logger;
 
-        public ContaController(ILogger<ContaController> logger, IContaService contaService)
+        public ContaController(ILogger<ContaController> logger, IContaAppService contaAppService)
         {
             _logger = logger;
-            _contaService = contaService;
+            _contaAppService = contaAppService;
         }
 
         [HttpPost]
-        public async Task<IActionResult > Post([FromBody] Conta conta)
+        public async Task<IActionResult > Post([FromBody] AdicionarContaRequest conta)
         {
             try
             {
-                var result = await _contaService.Add(conta);
+                var result = await _contaAppService.Add(conta);
                 return Ok(result);
             }
             catch (FluentValidation.ValidationException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.Errors.FirstOrDefault().ErrorMessage);
             }
-
-            return null;
         }
         [HttpGet("Conta")]
         public IActionResult  Get()
         {
             try
             {
-                var result = _contaService.Get();
+                var result = _contaAppService.GetAll();
                 return Ok(result);
             }
             catch (FluentValidation.ValidationException ex)

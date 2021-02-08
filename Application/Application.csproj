@@ -5,12 +5,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="AppService" />
+      <ProjectReference Include="..\CrossCrutting\CrossCrutting.csproj" />
+      <ProjectReference Include="..\Infra\Infra.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\CrossCrutting\CrossCrutting.csproj" />
-      <ProjectReference Include="..\Infra\Infra.csproj" />
+      <PackageReference Include="AutoMapper" Version="6.0.2" />
     </ItemGroup>
 
 </Project>

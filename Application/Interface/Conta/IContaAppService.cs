@@ -1,6 +1,9 @@
+using Application.Arguments.Conta.Adicionar;
+using Application.Interface.Base;
+
 namespace Application.Interface.Conta
 {
-    public class IContaAppService
+    public interface IContaAppService :IAppService<AdicionarContaRequest>
     {
         
     }

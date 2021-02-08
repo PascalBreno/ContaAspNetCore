@@ -34,6 +34,11 @@ namespace Domain.Service.Base
             throw new NotImplementedException();
         }
 
+        public T GetById(string id)
+        {
+            throw new NotImplementedException();
+        }
+
         public T GetById(long id)
         {
             throw new NotImplementedException();

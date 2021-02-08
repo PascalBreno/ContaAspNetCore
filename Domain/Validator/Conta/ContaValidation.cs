@@ -10,7 +10,7 @@ namespace Domain.Validator.Conta
             RuleFor(x => x.Nome).NotNull().NotEmpty().WithMessage("O nome é obrigatório!");
             RuleFor(x => x.ValorOriginal).NotNull().WithMessage("O Valor original deve ser preenchido");
             RuleFor(x => x.DataVencimento).NotNull().WithMessage("A data de vencimento não deve ficar vazia");
-            RuleFor(x => x.DataVencimento).Must(DataMaior).NotNull().WithMessage("A data de vencimento não pode ser menor ou igual a data de hoje.");
+            RuleFor(x => x.DataVencimento).Must(DataMaior).WithMessage("A data de vencimento não pode ser menor ou igual a data de hoje.");
             
         }
 

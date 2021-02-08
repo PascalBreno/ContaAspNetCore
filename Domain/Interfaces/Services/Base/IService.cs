@@ -14,7 +14,7 @@ namespace Domain.Interfaces.Services.Base
 
         long GenerateId();
 
-        T GetById(long id);
+        T GetById(string id);
         T Update(T obj);
         void Remove(T obj);
         IEnumerable<T> Get(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = "");

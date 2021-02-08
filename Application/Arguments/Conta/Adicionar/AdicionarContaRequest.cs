@@ -6,7 +6,7 @@ namespace Application.Arguments.Conta.Adicionar
     {
         public string Nome { get; set; }
         public long Valor { get; set; }
-        public DateTime DataVencimento { get; set; }
+        public DateTime? DataVencimento { get; set; }
 
     }
 }
