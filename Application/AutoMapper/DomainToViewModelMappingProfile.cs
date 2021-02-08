@@ -12,8 +12,9 @@ namespace Imea.Application.Mapper
     {
         public DomainToViewModelMappingProfile()
         {
-            CreateMap<Conta, AdicionarContaRequest>().ForMember(x => x.Valor, y => y.MapFrom(z => z.ValorOriginal));
-            //.ForMember(x=>x.status,y=> y.MapFrom(z=>Enum.GetName(typeof(StatusEnum), z.status)));
+            CreateMap<Conta, AdicionarContaRequest>().ForMember(x => x.Valor, y => y.MapFrom(z => z.ValorOriginal))
+                .ForMember(x=>x.ValorComJuros, y=>y.MapFrom(z=>z.ValorCorrigido));
+           
 
 
         }

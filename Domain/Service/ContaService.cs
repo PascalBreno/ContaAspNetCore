@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using CrossCrutting.Enum;
 using Domain.Entities;
 using Domain.Interfaces.Repositories.Base;
 using Domain.Interfaces.Services;
@@ -18,22 +19,46 @@ namespace Domain.Service
 
         public async Task<Conta> Add(Conta obj)
         {
-            if (obj.DataPagamento <= obj.DataVencimento) return await base.Add(obj);
-            var DiasDeAtraso = (obj.DataPagamento - obj.DataVencimento).TotalDays;
-            if (DiasDeAtraso <= 3)
+            double ValorAcrescentado = 0;
+            if (obj.DataPagamento > obj.DataVencimento)
             {
-                //Cndição para multa de 2% e juros de 0,1% ao dia
+                var DiasDeAtraso = (obj.DataPagamento - obj.DataVencimento).TotalDays;
+                if (DiasDeAtraso <= 3)
+                {
+                    //Cndição para multa de 2% e juros de 0,1% ao dia
+                    ValorAcrescentado = VerificacaoAcrescimo((int)DiasDeAtraso, 2, 1, obj.ValorOriginal);
+                }
+                else if (DiasDeAtraso > 3 && DiasDeAtraso <= 5)
+                {
+                    //Condição para multa de 3% e juros de 0,2% ao dia
+                    ValorAcrescentado = VerificacaoAcrescimo((int)DiasDeAtraso, 3, 2, obj.ValorOriginal);
+
+                }
+                else if (DiasDeAtraso > 5)
+                {
+                    //Condição para multa de 3% e juros de 0,3% ao dia
+                    ValorAcrescentado = VerificacaoAcrescimo((int)DiasDeAtraso,3, 3, obj.ValorOriginal);
+                }
+                obj.status = StatusEnum.PagoComAtraso;
+
             }
-            else if (DiasDeAtraso > 3 && DiasDeAtraso <= 5)
+            else
             {
-                //Condição para multa de 3% e juros de 0,2% ao dia
-            }
-            else if (DiasDeAtraso > 5)
-            {
-                //Condição para multa de 3% e juros de 0,3% ao dia
+                obj.status = StatusEnum.PagoSemAtraso;
             }
 
+            obj.ValorCorrigido = obj.ValorOriginal + ValorAcrescentado;
             return await base.Add(obj);
+        }
+
+        private double VerificacaoAcrescimo(int dias, double multa, double juros, double valorOriginal)
+        {
+            var percentual = multa / 100.0;
+            var ValorAcrescentado = percentual * valorOriginal;
+            juros *= dias;
+            percentual = juros/ 100.0;
+            return  ValorAcrescentado+ percentual * valorOriginal;
+            
         }
     }
 }

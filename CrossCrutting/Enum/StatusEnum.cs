@@ -3,6 +3,6 @@
     public enum StatusEnum
     {
         PagoSemAtraso = 1,
-        EmAtraso = 2
+        PagoComAtraso = 2
     }
 }

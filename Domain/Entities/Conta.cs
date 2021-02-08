@@ -6,11 +6,11 @@ namespace Domain.Entities
     public class Conta : EntityBase
 
     {
-        public string Nome { get; set; }
-        public long ValorOriginal { get; set; }
+        public string Nome { get; private set; }
+        public long ValorOriginal { get; private set; }
         public  double? ValorCorrigido { get; set; }
-        public DateTime  DataVencimento  { get; set; }
-        public DateTime DataPagamento { get; set; }
+        public DateTime  DataVencimento  { get; private set; }
+        public DateTime DataPagamento { get; private set; }
         public StatusEnum status { get; set; }
     }
 }
