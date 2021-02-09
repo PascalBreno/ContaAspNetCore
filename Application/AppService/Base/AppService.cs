@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.AppService.UnitOfWork;
+using Application.Interface.Arguments;
 using Application.Interface.Base;
 using Domain.Entities;
 using Domain.Interfaces.Services.Base;
@@ -13,8 +14,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.AppService.Base
 {
-      public class AppService <TViewModel, TEntity, TService> : UnitOfWorkService, IAppService<TViewModel>
-           where TViewModel : class
+      public class AppService <TViewModelRequest, TViewModelResponse, TRequestSearch, TEntity, TService> : UnitOfWorkService, IAppService<TViewModelRequest, TViewModelResponse,TRequestSearch, TEntity>
+           where TViewModelRequest : class
+           where TViewModelResponse: class
+           where TRequestSearch : ISearchRequest<TEntity>
            where TEntity : EntityBase
            where TService : IService<TEntity>
     {
@@ -26,25 +29,25 @@ namespace Application.AppService.Base
             Service = service;
         }
 
-        public async Task<TViewModel> Add(TViewModel obj)
+        public async Task<TViewModelResponse> Add(TViewModelRequest obj)
         {
             var entity = AutoMapper.Mapper.Map<TEntity>(obj);
             BeginTransaction();
             var result = await Service.Add(entity);
-            Commit();
-            return result != null ? AutoMapper.Mapper.Map<TViewModel>(result) : null;
+            await Commit();
+            return result != null ? AutoMapper.Mapper.Map<TViewModelResponse>(result) : null;
         }
 
-        public TViewModel GetById(string id)
+        public TViewModelResponse GetById(Guid id)
         {
             var result = Service.GetById(id);
-            return result != default(TEntity) ? AutoMapper.Mapper.Map<TViewModel>(result) : null;
+            return result != default(TEntity) ? AutoMapper.Mapper.Map<TViewModelResponse>(result) : null;
         }
         
-        public IEnumerable<TViewModel> GetAll()
+        public IEnumerable<TViewModelResponse> GetAll(TRequestSearch requestSearch)
         {
-            var result = Service.Get();
-            return  (result != default(TEntity) ? AutoMapper.Mapper.Map<IEnumerable<TViewModel>>(result) : null);
+            var result = Service.Get(requestSearch.CriarFiltro());
+            return  (result != default(TEntity) ? AutoMapper.Mapper.Map<IEnumerable<TViewModelResponse>>(result) : null);
         }
 
         

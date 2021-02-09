@@ -12,7 +12,7 @@ namespace Domain.Interfaces.Services.Base
     {
         Task<T> Add(T obj);
         
-        T GetById(string id);
-        IEnumerable<T> Get(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = "");
+        T GetById(Guid id);
+        IEnumerable<T> Get(Expression<Func<T, bool>> filter = null);
     }
 }

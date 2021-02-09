@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Domain.Entities;
 using Domain.Interfaces.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Infra.Persistence.Repository.Base
 {
@@ -27,28 +26,14 @@ namespace Infra.Persistence.Repository.Base
             await _context.SaveChangesAsync();   
             return  entry.Entity;
         }
-
-        public long GenerateId()
+        
+        public T GetById(Guid id)
         {
-            throw new NotImplementedException();
+            var dbSet = _context.Set<T>();
+            return dbSet.FirstOrDefault(x => x.Id == id && !x.IsDeleted);
         }
 
-        public T GetById(long id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public T Update(T obj)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Remove(T obj)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<T> Get(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = "")
+        public IEnumerable<T> Get(Expression<Func<T, bool>> filter = null)
         {
             var dbSet = _context.Set<T>();
             IQueryable<T> query = dbSet;
@@ -58,20 +43,8 @@ namespace Infra.Persistence.Repository.Base
                 query = query.Where(filter);
             }
 
-            foreach (var includeProperty in includeProperties.Split
-                (new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-            {
-                query = query.Include(includeProperty);
-            }
-
-            if (orderBy != null)
-                return orderBy(query).AsNoTracking();
             return query.AsNoTracking();
         }
-
-        public bool Any(Expression<Func<T, bool>> filter = null)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

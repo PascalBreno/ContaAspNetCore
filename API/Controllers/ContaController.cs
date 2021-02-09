@@ -1,7 +1,10 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Http;
 using Application.Arguments.Conta.Adicionar;
+using Application.Arguments.Conta.Buscar;
 using Application.Interface.Conta;
 using Domain.Entities;
 using Domain.Interfaces.Services;
@@ -14,20 +17,18 @@ namespace API.Controllers
 {
     [ApiController]
     
-    [Route("Conta")]
+    [Microsoft.AspNetCore.Mvc.Route("Conta")]
     public class ContaController  : ControllerBase
     {
         private readonly IContaAppService _contaAppService;
-        private readonly ILogger<ContaController> _logger;
 
-        public ContaController(ILogger<ContaController> logger, IContaAppService contaAppService)
+        public ContaController( IContaAppService contaAppService)
         {
-            _logger = logger;
             _contaAppService = contaAppService;
         }
 
-        [HttpPost]
-        public async Task<IActionResult > Post([FromBody] AdicionarContaRequest conta)
+        [Microsoft.AspNetCore.Mvc.HttpPost]
+        public async Task<IActionResult > Post([Microsoft.AspNetCore.Mvc.FromBody] AdicionarContaRequest conta)
         {
             try
             {
@@ -36,20 +37,34 @@ namespace API.Controllers
             }
             catch (FluentValidation.ValidationException ex)
             {
-                return BadRequest(ex.Errors.FirstOrDefault().ErrorMessage);
+                return BadRequest(ex.Errors.Select(x=> new {x.PropertyName, x.ErrorMessage}));
             }
         }
-        [HttpGet]
-        public IActionResult  Get()
+        [Microsoft.AspNetCore.Mvc.HttpGet]
+        public IActionResult  Get ([FromQuery] BuscarContaRequest buscarContaRequest)
         {
             try
             {
-                var result = _contaAppService.GetAll();
+                var result = _contaAppService.GetAll(buscarContaRequest);
                 return Ok(result);
             }
             catch (FluentValidation.ValidationException ex)
             {
-                return BadRequest(ex.Errors.FirstOrDefault().ErrorMessage);
+                return BadRequest(ex.Errors.Select(x=> new {x.PropertyName, x.ErrorMessage}));
+            }
+            
+        }
+        [Microsoft.AspNetCore.Mvc.HttpGet("Id")]
+        public IActionResult  GetById([FromQuery] Guid Id)
+        {
+            try
+            {
+                var result = _contaAppService.GetById(Id);
+                return Ok(result);
+            }
+            catch (FluentValidation.ValidationException ex)
+            {
+                return BadRequest(ex.Errors.Select(x=> new {x.PropertyName, x.ErrorMessage}));
             }
             
         }

@@ -1,14 +1,20 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Application.Interface.Arguments;
 
 namespace Application.Interface.Base
 {
-    public interface IAppService<T> where T : class
+    public interface IAppService<T, TResponse, TRequestSearch, TEntity> 
+        where T : class
+        where TResponse: class
+    where TRequestSearch : ISearchRequest<TEntity>
     {
-        Task<T> Add(T viewModel);
+        Task<TResponse> Add(T viewModel);
 
 
-        IEnumerable<T> GetAll();
+        IEnumerable<TResponse> GetAll(TRequestSearch filtro);
+        TResponse GetById(Guid id);
 
     }
 }

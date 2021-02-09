@@ -1,8 +1,8 @@
-using Application.AppService.Base;
+using System;
+using System.Reflection;
+using System.IO;
 using Application.AppService.Conta;
 using Application.AppService.UnitOfWork;
-using Application.Arguments.Conta.Adicionar;
-using Application.Interface.Base;
 using Application.Interface.Conta;
 using Application.Interface.UnitOfWork;
 using Domain.Entities;
@@ -24,6 +24,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 namespace API
 {
@@ -35,30 +36,54 @@ namespace API
 
             services.AddControllers();
             services.AddRouting();
-            
+
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped(typeof(IService<>), typeof(Service<>));
-            
+
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
             services.AddScoped(typeof(IUnitOfWorkService), typeof(UnitOfWorkService));
-            //services.AddScoped(typeof(IAppService<Conta>), typeof(AppService<AdicionarContaRequest, Conta, IContaService>));
-            
-            
-            
+            services.AddSwaggerGen(swagger =>
+            {
+                swagger.SwaggerDoc(
+                    "v1", new OpenApiInfo { 
+                        Title = "Contas API",
+                        Version = "v1",
+                        Description = "Teste seletivo Contas BD",
+                        Contact = new OpenApiContact
+                        {
+                            Name = "Breno Felix",
+                            Email = "brenodml@live.com",
+                            Url = new Uri("https://www.linkedin.com/in/breno-felix-de-souza-49186b131/"),
+                        }
+                        
+                       }
+                    
+                    );
+            });
+            services.AddSwaggerGenNewtonsoftSupport();
+
             services.AddTransient(typeof(IValidator<Conta>), typeof(ContaValidation));
             services.AddTransient(typeof(IContaRepository), typeof(ContaRepository));
             services.AddTransient(typeof(IContaService), typeof(ContaService));
             services.AddTransient(typeof(IContaAppService), typeof(ContaAppService));
-
+           
 
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Contas API");
+                c.RoutePrefix = "";
+                c.DocumentTitle = "Contas API";
+            });
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+           
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -67,6 +92,7 @@ namespace API
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
             AutoMapperConfig.RegisterMapping();
+
         }
     }
 }

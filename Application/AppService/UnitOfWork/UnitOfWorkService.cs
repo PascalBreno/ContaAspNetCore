@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Application.Interface.UnitOfWork;
 using Domain.Interfaces.UnitOfWork;
 using Infra.Persistence;
@@ -19,9 +20,9 @@ namespace Application.AppService.UnitOfWork
             _uow.BeginTransaction();
         }
 
-        public void Commit()
+        public async Task<int> Commit()
         {
-            _uow.SaveChanges();
+            return await _uow.SaveChangesAsync();
         }
     }
 }

@@ -7,22 +7,12 @@ namespace Domain.Validator.Conta
     {
        public ContaValidation()
         {
-            RuleFor(x => x.Nome).NotNull().NotEmpty().WithMessage("O nome é obrigatório!");
-            
-            RuleFor(x => x.ValorOriginal).NotNull().WithMessage("O valor da conta não foi informada.");
-            RuleFor(x => x.ValorOriginal).Must(valorZero).WithMessage("O valor da conta deve ser maior que 0");
-            RuleFor(x => x.DataVencimento).NotNull().WithMessage("A data de vencimento não deve ficar vazia");
-            RuleFor(x => x.DataVencimento).Must(DataMaior).WithMessage("A data de vencimento não pode ser menor ou igual a data de hoje.");
+            RuleFor(x => x.Nome).NotEmpty().WithMessage("O nome é obrigatório!");
+            RuleFor(x => x.ValorOriginal).NotEmpty().WithMessage("O valor da conta deve ser maior que 0");
+            RuleFor(x => x.DataVencimento).NotEmpty().WithMessage("A data de vencimento não foi informado");
+            RuleFor(x => x.DataPagamento).NotEmpty().WithMessage("A data do pagamento não foi informada");
         }
-
-       private static bool valorZero(long ValorOriginal)
-       {
-           return ValorOriginal >0.0;
-       }
-       private static bool DataMaior(DateTime DataVencimento)
-       {
-           var dataAtual = DateTime.UtcNow;
-           return dataAtual < DataVencimento;
-       }
+        //TODO Verificar conversão do float
+       
     }
 }

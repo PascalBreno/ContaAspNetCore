@@ -13,8 +13,8 @@ namespace Domain.Interfaces.Repositories.Base
         Task<T> Add(T obj);
 
 
-        T GetById(long id);
-        IEnumerable<T> Get(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = "");
+        T GetById(Guid id);
+        IEnumerable<T> Get(Expression<Func<T, bool>> filter = null);
         
     }
 }

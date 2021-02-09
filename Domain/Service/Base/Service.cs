@@ -28,40 +28,18 @@ namespace Domain.Service.Base
             await _validator.ValidateAndThrowAsync(obj);
             return await _repository.Add(obj);
         }
+        
 
-        public long GenerateId()
+        public T GetById(Guid id)
         {
-            throw new NotImplementedException();
+            return _repository.GetById(id);
         }
+        
 
-        public T GetById(string id)
+        public IEnumerable<T> Get(Expression<Func<T, bool>> filter = null)
         {
-            throw new NotImplementedException();
+            return _repository.Get(filter);
         }
-
-        public T GetById(long id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public T Update(T obj)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Remove(T obj)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<T> Get(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = "")
-        {
-            return _repository.Get(filter, orderBy, includeProperties);
-        }
-
-        public bool Any(Expression<Func<T, bool>> filter = null)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

@@ -12,6 +12,8 @@
 
     <ItemGroup>
       <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.7" />
+      <PackageReference Include="Swashbuckle.AspNetCore" Version="6.0.2" />
+      <PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft" Version="6.0.2" />
     </ItemGroup>
 
 </Project>
