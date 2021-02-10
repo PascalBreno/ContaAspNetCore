@@ -31,8 +31,8 @@ namespace xUnitTest.Domain.Services
             var contaTest = new Conta
             {
                 Nome="Nome Teste",
-                DataPagamento = new DateTime(09-05-1998),
-                DataVencimento =new DateTime(09-05-2000),
+                DataPagamento = new DateTime(1998,05,10),
+                DataVencimento =new DateTime(2000,05,10),
                 ValorOriginal = 1000
             };
 
@@ -46,7 +46,7 @@ namespace xUnitTest.Domain.Services
             // assert 
             _contaRepositoryMock.Verify(x=>x.Add(contaTest), Times.Once);
             Assert.True(contaResult.ValorCorrigido>0.0);
-            Assert.True(contaResult.Status==StatusEnum.PagoComAtraso);
+            Assert.False(contaResult.Status==StatusEnum.PagoComAtraso);
         }
 
         [Fact]
@@ -69,35 +69,60 @@ namespace xUnitTest.Domain.Services
         [Fact]
         public void Add_VerificarJuros_Ate5Dias_Sucess()
         {
-            //Verificando com até 3 dias de atraso
+            //Verificando com até 5 dias de atraso
             // arrange
-            var dias = 3;
-            var multa = 2;
-            var juros = 0.1;
+            var dias = 5;
+            var multa = 3;
+            var juros = 0.2;
             var valorOriginal = 1000;
             
             // action
             var contaResult =  _contaService.VerificacaoAcrescimo(dias, multa, juros, valorOriginal);
             // assert
-            Assert.Equal(23, contaResult);
+            Assert.Equal(40, contaResult);
 
         }
         [Fact]
         public void Add_VerificarJuros_Ate7Dias_Sucess()
         {
-            //Verificando com até 3 dias de atraso
+            //Verificando com até 7 dias de atraso
             // arrange
-            var dias = 3;
-            var multa = 2;
-            var juros = 0.1;
+            var dias = 7;
+            var multa = 3;
+            var juros = 0.3;
             var valorOriginal = 1000;
             
             // action
             var contaResult =  _contaService.VerificacaoAcrescimo(dias, multa, juros, valorOriginal);
             // assert
-            Assert.Equal(23, contaResult);
+            Assert.Equal(51, contaResult);
 
         }
-        
+        [Fact]
+        public async void Add_ValidarEAdicionarConta_Fail()
+        {
+            //Verifica se o status de pagamento com atraso está correto
+            
+            //arrange 
+            var contaTest = new Conta
+            {
+                Nome="Nome Teste",
+                DataPagamento = new DateTime(2001,05,10),
+                DataVencimento =new DateTime(2000,05,10),
+                ValorOriginal = 1000
+            };
+
+            _contaRepositoryMock.Setup(x => x.Add(contaTest))
+                .ReturnsAsync(contaTest);
+            
+            // action
+
+            var contaResult = await _contaService.Add(contaTest);
+
+            // assert 
+            _contaRepositoryMock.Verify(x=>x.Add(contaTest), Times.Once);
+            Assert.True(contaResult.ValorCorrigido>0.0);
+            Assert.False(contaResult.Status==StatusEnum.PagoSemAtraso);
+        }
     }
 }
