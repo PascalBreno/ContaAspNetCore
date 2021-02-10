@@ -16,4 +16,12 @@
       <PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft" Version="6.0.2" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Include="Web.config">
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>
