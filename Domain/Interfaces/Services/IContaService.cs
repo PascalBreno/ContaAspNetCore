@@ -1,5 +1,4 @@
-﻿using System;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Domain.Interfaces.Services.Base;
 
 namespace Domain.Interfaces.Services

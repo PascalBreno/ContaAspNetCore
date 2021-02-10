@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using System;
 
 namespace Domain.Validator.Conta
 {
@@ -12,7 +11,6 @@ namespace Domain.Validator.Conta
             RuleFor(x => x.DataVencimento).NotEmpty().WithMessage("A data de vencimento não foi informado");
             RuleFor(x => x.DataPagamento).NotEmpty().WithMessage("A data do pagamento não foi informada");
         }
-        //TODO Verificar conversão do float
        
     }
 }

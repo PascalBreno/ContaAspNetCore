@@ -1,10 +1,7 @@
 using System;
 using System.Reflection;
-using System.IO;
 using Application.AppService.Conta;
-using Application.AppService.UnitOfWork;
 using Application.Interface.Conta;
-using Application.Interface.UnitOfWork;
 using Domain.Entities;
 using Domain.Interfaces.Repositories;
 using Domain.Interfaces.Repositories.Base;
@@ -12,13 +9,10 @@ using Domain.Interfaces.Services;
 using Domain.Interfaces.Services.Base;
 using Domain.Interfaces.UnitOfWork;
 using Domain.Service;
-using Domain.Service.Base;
 using Domain.Validator.Conta;
 using FluentValidation;
-using Imea.Application.Mapper;
 using Infra.Persistence;
 using Infra.Persistence.Repository;
-using Infra.Persistence.Repository.Base;
 using Infra.UnitOfWork;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -37,11 +31,17 @@ namespace API
             services.AddControllers();
             services.AddRouting();
 
-            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-            services.AddScoped(typeof(IService<>), typeof(Service<>));
-
+            
+            services.AddScoped<IRepository<Conta>, ContaRepository>();
+            services.AddScoped<IContaRepository, ContaRepository>();
+            
+            services.AddScoped<IContaService, ContaService>();
+            services.AddScoped<IService<Conta>, ContaService>();
+            
+            services.AddScoped<IContaAppService, ContaAppService>();
+            
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
-            services.AddScoped(typeof(IUnitOfWorkService), typeof(UnitOfWorkService));
+            services.AddAutoMapper(Assembly.Load("Application"));
             services.AddSwaggerGen(swagger =>
             {
                 swagger.SwaggerDoc(
@@ -63,9 +63,6 @@ namespace API
             services.AddSwaggerGenNewtonsoftSupport();
 
             services.AddTransient(typeof(IValidator<Conta>), typeof(ContaValidation));
-            services.AddTransient(typeof(IContaRepository), typeof(ContaRepository));
-            services.AddTransient(typeof(IContaService), typeof(ContaService));
-            services.AddTransient(typeof(IContaAppService), typeof(ContaAppService));
            
 
         }
@@ -91,7 +88,6 @@ namespace API
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
-            AutoMapperConfig.RegisterMapping();
 
         }
     }

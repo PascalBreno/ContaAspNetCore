@@ -3,28 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Domain.Entities;
+using Domain.Entities.Base;
 using Domain.Interfaces.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infra.Persistence.Repository.Base
 {
-    public class Repository<T> : IRepository<T>
+    public abstract class Repository<T> : IRepository<T>
     where T : EntityBase 
     {
 
         private readonly Context _context;
 
-        public Repository(Context context)
+        protected Repository(Context context)
         {
             _context = context;
         }
         public async Task<T> Add(T obj)
         {
-            var entry = _context.Entry(obj);
-            entry.State = EntityState.Added;
-            await _context.SaveChangesAsync();   
-            return  entry.Entity;
+            await _context.AddAsync(obj);
+            return  obj;
         }
         
         public T GetById(Guid id)

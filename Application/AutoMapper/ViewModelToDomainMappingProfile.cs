@@ -1,10 +1,8 @@
-﻿using System;
-using Application.Arguments.Conta.Adicionar;
+﻿using Application.Arguments.Conta.Adicionar;
 using AutoMapper;
-using CrossCrutting.Enum;
 using Domain.Entities;
 
-namespace Imea.Application.Mapper
+namespace Application.AutoMapper
 {
     public class ViewModelToDomainMappingProfile : Profile
     {

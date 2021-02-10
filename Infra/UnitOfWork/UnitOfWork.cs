@@ -3,7 +3,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Domain.Interfaces.UnitOfWork;
 using Infra.Persistence;
-using Microsoft.EntityFrameworkCore;
 
 namespace Infra.UnitOfWork
 {

@@ -1,7 +1,4 @@
 ﻿using System;
-using CrossCrutting.Enum;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
-using Newtonsoft.Json;
 
 namespace Application.Arguments.Conta.Adicionar
 {

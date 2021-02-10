@@ -1,10 +1,8 @@
 ﻿
 
 using System;
-using System.Linq;
 using System.Linq.Expressions;
 using Application.Interface.Arguments;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 
 namespace Application.Arguments.Conta.Buscar
 {
@@ -13,9 +11,9 @@ namespace Application.Arguments.Conta.Buscar
         public string Nome { get; set; }
         public Expression<Func<Domain.Entities.Conta, bool>>  CriarFiltro ()
         {
-            Expression<Func<Domain.Entities.Conta, bool>> filtro = filtro => filtro.IsDeleted == false;
+            Expression<Func<Domain.Entities.Conta, bool>> filtro = filter=>true;
             if (!string.IsNullOrEmpty(Nome))
-                filtro = filtro => filtro.Nome == Nome;
+                filtro = x => x.Nome == Nome;
             
             return filtro;
         }

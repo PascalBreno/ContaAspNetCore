@@ -1,5 +1,4 @@
-﻿using Domain.Entities;
-using Infra.Persistence.Configure;
+﻿using Infra.Persistence.Configure;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infra.Persistence

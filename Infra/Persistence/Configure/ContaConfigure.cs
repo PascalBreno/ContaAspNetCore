@@ -10,12 +10,12 @@ namespace Infra.Persistence.Configure
         {
             builder.ToTable("Conta");
             builder.HasKey(x => x.Id);
-            builder.Property(x => x.status);
+            builder.Property(x => x.Status);
             builder.Property(x => x.Nome).IsRequired();
             builder.Property(x => x.DataVencimento).IsRequired();
             builder.Property(x => x.ValorOriginal).IsRequired();
             builder.Property(x => x.IsDeleted).HasDefaultValue(false);
-
+            builder.HasQueryFilter(x => !x.IsDeleted);
         }
     }
 }

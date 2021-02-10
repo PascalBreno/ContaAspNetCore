@@ -1,23 +1,16 @@
 using System;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web.Http;
 using Application.Arguments.Conta.Adicionar;
 using Application.Arguments.Conta.Buscar;
 using Application.Interface.Conta;
-using Domain.Entities;
-using Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using FluentValidation;
-using FluentValidation.TestHelper;
 
 namespace API.Controllers
 {
     [ApiController]
     
-    [Microsoft.AspNetCore.Mvc.Route("Conta")]
+    [Route("Conta")]
     public class ContaController  : ControllerBase
     {
         private readonly IContaAppService _contaAppService;
@@ -27,8 +20,8 @@ namespace API.Controllers
             _contaAppService = contaAppService;
         }
 
-        [Microsoft.AspNetCore.Mvc.HttpPost]
-        public async Task<IActionResult > Post([Microsoft.AspNetCore.Mvc.FromBody] AdicionarContaRequest conta)
+        [HttpPost]
+        public async Task<IActionResult > Post([FromBody] AdicionarContaRequest conta)
         {
             try
             {
@@ -40,7 +33,7 @@ namespace API.Controllers
                 return BadRequest(ex.Errors.Select(x=> new {x.PropertyName, x.ErrorMessage}));
             }
         }
-        [Microsoft.AspNetCore.Mvc.HttpGet]
+        [HttpGet]
         public IActionResult  Get ([FromQuery] BuscarContaRequest buscarContaRequest)
         {
             try
@@ -54,12 +47,12 @@ namespace API.Controllers
             }
             
         }
-        [Microsoft.AspNetCore.Mvc.HttpGet("Id")]
-        public IActionResult  GetById([FromQuery] Guid Id)
+        [HttpGet("Id")]
+        public IActionResult  GetById([FromQuery] Guid id)
         {
             try
             {
-                var result = _contaAppService.GetById(Id);
+                var result = _contaAppService.GetById(id);
                 return Ok(result);
             }
             catch (FluentValidation.ValidationException ex)
