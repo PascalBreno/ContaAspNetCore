@@ -10,6 +10,7 @@ namespace Application.Arguments.Conta.Adicionar
         public double ValorComJuros { get; set; }
         public DateTime? DataVencimento { get; set; }
         public DateTime? DataPagamento { get; set; }
+        public int QuantidadeDeDias { get; set; }
         public string Status { get; set; }
     }
 }
