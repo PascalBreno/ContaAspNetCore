@@ -13,7 +13,9 @@ namespace Infra.Persistence.Configure
             builder.Property(x => x.Status);
             builder.Property(x => x.Nome).IsRequired();
             builder.Property(x => x.DataVencimento).IsRequired();
+            builder.Property(x => x.DataPagamento).IsRequired();
             builder.Property(x => x.ValorOriginal).IsRequired();
+            builder.Property(x => x.DiasDeAtraso).IsRequired().HasDefaultValue(0);
             builder.Property(x => x.IsDeleted).HasDefaultValue(false);
             builder.HasQueryFilter(x => !x.IsDeleted);
         }

@@ -12,6 +12,7 @@ namespace Domain.Entities
         public  double ValorCorrigido { get; set; }
         public DateTime  DataVencimento  { get;  set; }
         public DateTime DataPagamento { get;  set; }
+        public int DiasDeAtraso { get; set; }
         public StatusEnum Status { get; set; }
     }
 }
