@@ -13,7 +13,7 @@ namespace Application.AutoMapper
             CreateMap<Conta, AdicionarContaResponse>().ForMember(x => x.Valor, y => y.MapFrom(z => z.ValorOriginal))
                 .ForMember(x=>x.ValorComJuros, y=>y.MapFrom(z=>z.ValorCorrigido))
                 .ForMember(x=>x.Status,y=> y.MapFrom(z=>Enum.GetName(typeof(StatusEnum), z.Status)))
-                .ForMember(x=>x.QuantidadeDeDias, y=>y.MapFrom(z=> (z.DataPagamento>z.DataVencimento) ? (z.DataVencimento-z.DataPagamento).TotalDays : 0));
+                .ForMember(x=>x.QuantidadeDeDias, y=>y.MapFrom(z=> (z.DataPagamento>z.DataVencimento) ? (z.DataPagamento-z.DataVencimento).TotalDays : 0));
 
         }
     }
